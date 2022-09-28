@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.denizsimsek.newseventsapp.R
+import com.denizsimsek.newseventsapp.adapter.NewsAdapter
 import com.denizsimsek.newseventsapp.databinding.FragmentNewsFeedBinding
+import com.denizsimsek.newseventsapp.model.News
 import com.denizsimsek.newseventsapp.viewmodel.NewsFeedViewModel
 
 class NewsFeedFragment : Fragment() {
 
     private lateinit var binding:FragmentNewsFeedBinding
     private lateinit var viewModel:NewsFeedViewModel
+    private var newsArrayList=ArrayList<News>()
+    private var adapter=NewsAdapter(newsArrayList)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,7 +36,8 @@ class NewsFeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.newsRecyclerView.layoutManager=LinearLayoutManager(context)
+        binding.newsRecyclerView.adapter=adapter
 
         viewModel=ViewModelProvider(this).get(NewsFeedViewModel::class.java)
         viewModel.getNewsFromAPI()
@@ -48,6 +54,9 @@ class NewsFeedFragment : Fragment() {
             newsList?.let {
                 binding.newsRecyclerView.visibility=View.VISIBLE
                 //SET ADAPTER
+
+                adapter.refreshNewsList(newsList.newsList)
+
             }
 
 

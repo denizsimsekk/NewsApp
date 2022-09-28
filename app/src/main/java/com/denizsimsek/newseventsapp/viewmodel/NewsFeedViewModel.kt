@@ -47,12 +47,14 @@ class NewsFeedViewModel(application: Application) :BaseViewModel(application) {
         newsFeedError.value=false
         newsFeedLoading.value=false
 
+
         newsList.value=t
 
         t.newsList.forEach()
         {
             println("name "+it.name)
             println("description"+it.description)
+            println("description"+it.url)
         }
     }
 
