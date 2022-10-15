@@ -1,5 +1,7 @@
 package com.denizsimsek.newseventsapp.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +26,17 @@ class NewsAdapter(var newsList:ArrayList<News>) :RecyclerView.Adapter<NewsAdapte
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         holder.view.news=newsList[position]
+        holder.itemView.setOnClickListener{
+            var url=holder.view.news!!.url
+            val intentToBrowser=Intent(Intent.ACTION_VIEW)
+            intentToBrowser.data=Uri.parse(url)
+            holder.itemView.context.startActivity(intentToBrowser)
+        }
+
+
+
     }
+
 
     override fun getItemCount(): Int {
        return newsList.size

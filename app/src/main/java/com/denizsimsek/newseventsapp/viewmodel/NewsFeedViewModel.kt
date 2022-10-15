@@ -50,12 +50,12 @@ class NewsFeedViewModel(application: Application) :BaseViewModel(application) {
 
         newsList.value=t
 
-        t.newsList.forEach()
+        /*t.newsList.forEach()
         {
-            println("name "+it.name)
+           //println("name "+it.name)
             println("description"+it.description)
             println("description"+it.url)
-        }
+        }*/
     }
 
 

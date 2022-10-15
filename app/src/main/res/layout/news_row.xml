@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="news"
@@ -8,50 +9,62 @@
 <LinearLayout
 
          android:layout_width="match_parent"
-         android:layout_height="match_parent"
+         android:layout_height="wrap_content"
         android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newsCardView"
         android:layout_margin="10dp"
+
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:id="@+id/newsImage"
                 android:src="@color/design_default_color_primary_dark"
                 android:scaleType="centerCrop"
-                android:downloadImage="@{news.image}"
+                android:downloadImage="@{news.urlToImage}"
                 ></ImageView>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:id="@+id/newsTitle"
-                android:text="@{news.name}"
-                android:textAlignment="center"
-                android:textSize="20sp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/newsTitle"
+                    android:text="@{news.title}"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
 
-                ></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/newsAuthor"
-                android:text="@{news.source}"
-                android:textSize="16sp"
-                ></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/newsDate"
-                android:textSize="16sp"
-                ></TextView>
+                    ></TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newsAuthor"
+                    android:text="@{news.author}"
+                    android:textSize="14sp"
+                    android:layout_margin="5dp"
+
+                    ></TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/newsDate"
+                    android:text="@{news.publishedAt}"
+                    android:textSize="12sp"
+                    android:layout_margin="5dp"
+                    ></TextView>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

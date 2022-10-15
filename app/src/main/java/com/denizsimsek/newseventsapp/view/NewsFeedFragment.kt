@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.denizsimsek.newseventsapp.R
 import com.denizsimsek.newseventsapp.adapter.NewsAdapter
 import com.denizsimsek.newseventsapp.databinding.FragmentNewsFeedBinding
@@ -18,6 +21,25 @@ class NewsFeedFragment : Fragment() {
     private lateinit var binding:FragmentNewsFeedBinding
     private lateinit var viewModel:NewsFeedViewModel
     private var newsArrayList=ArrayList<News>()
+
+    /*private val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT)
+    {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val layoutPosition = viewHolder.layoutPosition
+            val action=NewsFeedFragmentDirections.actionNewsFeedFragmentToEventsFragment()
+            Navigation.findNavController(viewHolder.itemView).navigate(action)
+        }
+
+    }*/
+
     private var adapter=NewsAdapter(newsArrayList)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +64,13 @@ class NewsFeedFragment : Fragment() {
         viewModel=ViewModelProvider(this).get(NewsFeedViewModel::class.java)
         viewModel.getNewsFromAPI()
 
+        binding.newsFeedSwipeRefresh.setOnRefreshListener {
+            viewModel.getNewsFromAPI()
+            binding.newsRecyclerView.visibility=View.GONE
+            binding.newsFeedProgress.visibility=View.VISIBLE
+            binding.newsFeedErrorText.visibility=View.GONE
+            binding.newsFeedSwipeRefresh.isRefreshing=false
+        }
 
         observeLiveData()
     }
@@ -54,7 +83,6 @@ class NewsFeedFragment : Fragment() {
             newsList?.let {
                 binding.newsRecyclerView.visibility=View.VISIBLE
                 //SET ADAPTER
-
                 adapter.refreshNewsList(newsList.newsList)
 
             }
